@@ -1,28 +1,33 @@
-﻿Random rand = new Random();
-int number, lower, higher;
-int userNumber;
-int chances;
-chances = 5;
-number = rand.Next(0, 101);
-higher = rand.Next (number + 1, number + 8);
-lower = rand.Next (number - 8, number);
+﻿var rand = new Random();
+
+var chancesCount = 5;
+var successNumber = rand.Next(0, 101);
+var higher = rand.Next(successNumber + 1, successNumber + 8);
+var lower = rand.Next(successNumber - 8, successNumber);
+
 Console.WriteLine(@"Вас приветстует игра ""Угадай число"".");
 Console.WriteLine($"Число которое вы должны найти, находится в диапазоне от {lower} до {higher}, у вас 5 попыток.");
-while (chances-- > 0)
+
+StartGame(chancesCount, successNumber);
+
+static void StartGame(int chancesCount, int successNumber)
 {
-    Console.Write($"Ваш вариант ответа:");
-    userNumber = Convert.ToInt32(Console.ReadLine());
-    if ( userNumber == number )
+    var isWin = false;
+    do
     {
+        Console.Write($"Ваш вариант ответа:");
+        var userNumber = Convert.ToInt32(Console.ReadLine());
+        if (userNumber == successNumber)
+        {
+            isWin = true;
+            break;
+        }
+        else
+            Console.WriteLine($"Неверно, у вас осталось {chancesCount} попыток.");
+    } while (--chancesCount > 0);
+
+    if (isWin)
         Console.WriteLine("Поздравляю, вы выиграли!");
-        break;
-    }
-    else
-    {
-        Console.WriteLine($"Неверно, у вас осталось {chances} попыток.");
-    }
-}
-if (chances < 0)
-{
-    Console.WriteLine($"Вы проиграли, загаданное число ровнялось: {number}.");
+    else 
+        Console.WriteLine($"Вы проиграли, загаданное число ровнялось: {successNumber}.");
 }
