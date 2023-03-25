@@ -1,12 +1,5 @@
 ﻿var rand = new Random();
 
-int[] array = new int[45];
-
-for (int i = 0; i < 45; i++)
-{
-    array[i] = i;
-}
-
 var chancesCount = 5;
 var successNumber = rand.Next(0, 101);
 var higher = rand.Next(successNumber + 1, successNumber + 8);
@@ -19,23 +12,22 @@ StartGame(chancesCount, successNumber);
 
 static void StartGame(int chancesCount, int successNumber)
 {
-    for (int i = 0; i < chancesCount; i++)
+    var isWin = false;
+    do
     {
         Console.Write($"Ваш вариант ответа:");
         var userNumber = Convert.ToInt32(Console.ReadLine());
         if (userNumber == successNumber)
         {
-            Console.WriteLine("Поздравляю, вы выиграли!");
+            isWin = true;
             break;
         }
         else
-        {
             Console.WriteLine($"Неверно, у вас осталось {chancesCount} попыток.");
-        }
-    }
+    } while (--chancesCount > 0);
 
-    if (chancesCount < 0)
-    {
+    if (isWin)
+        Console.WriteLine("Поздравляю, вы выиграли!");
+    else 
         Console.WriteLine($"Вы проиграли, загаданное число ровнялось: {successNumber}.");
-    }
 }
